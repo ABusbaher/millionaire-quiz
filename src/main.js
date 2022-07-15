@@ -19,6 +19,7 @@ const store = createStore({
       return {
         currentScore: 10000,
         scores: [0, 10000,50000,100000,500000,1000000,2000000],
+        correctAnswer: '',
       }
     },
     mutations: {
@@ -34,6 +35,9 @@ const store = createStore({
         },
         setCurrentScore (state, payload) {
             state.currentScore = payload;
+        },
+        setCorrenctAnswer (state, payload) {
+          state.correctAnswer = payload;
         }
     }
   });

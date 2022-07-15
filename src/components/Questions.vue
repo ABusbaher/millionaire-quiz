@@ -78,7 +78,7 @@ export default {
         ConfirmAnswer,
     },
     methods: {
-        ...mapMutations(["nextScore", "setCurrentScore","previousScore"]),
+        ...mapMutations(["nextScore", "setCurrentScore","previousScore", "setCorrenctAnswer"]),
         answered(value) {
            if (value == "") {
                 return alert("Niste izabrali odgovor");
@@ -121,9 +121,10 @@ export default {
             const getQuestion = 'questions_' + this.currentScore;
             const questionsObj = this.questions[0][getQuestion];
             this.currentQuestionObj =  questionsObj[Math.floor(Math.random()* questionsObj.length)];
+            this.setCorrenctAnswer(this.currentQuestionObj.correctAnswer);
             return this.currentQuestionObj;
         },
-        ...mapState(['currentScore', 'scores'])
+        ...mapState(['currentScore', 'scores', 'correctAnswer'])
     }
 }
 </script>
@@ -149,7 +150,7 @@ export default {
                 :class="[isAnswered && key == get_random_question.correctAnswer ? 'bg-green-300' : '',
                     isAnswered && this.selectedAnswer == key && key != get_random_question.correctAnswer ? 'bg-red-300' : '',
                     isAnswered == false ? 'hover:bg-gray-100' : '']"
-                :for="key">{{ answer }}
+                :for="key">{{key}}: {{ answer }}
             </label>
         </div>
     </div>
