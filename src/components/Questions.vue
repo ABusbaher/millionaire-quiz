@@ -80,6 +80,7 @@ export default {
     },
     props: {
         twoIncorectAnswers: Array,
+        cutByHalfHelpUsed: Boolean,
     },
     methods: {
         ...mapMutations(["nextScore", "setCurrentScore","previousScore", "setCorrenctAnswer"]),
@@ -95,7 +96,7 @@ export default {
                     this.get_random_question;
                     this.selectedAnswer = '';
                     this.isAnswered = false;
-                    this.isFiftyFiftyHelpUsed = true;
+                    this.cutByHalfHelpUsed == true ? this.isFiftyFiftyHelpUsed = true : this.isFiftyFiftyHelpUsed = false;
                 }, 500);
                 
             } else {

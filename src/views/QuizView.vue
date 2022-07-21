@@ -5,6 +5,7 @@ import Questions from "../components/Questions.vue";
 import CurrentAmount from "../components/CurrentAmount.vue";
 import FriendsHelp from "../components/FriendsHelp.vue";
 import AudienceHelp from "../components/AudienceHelp.vue";
+import FiftyFiftyHelp from "../components/FiftyFiftyHelp.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -15,6 +16,7 @@ export default {
           CurrentAmount,
           FriendsHelp,
           AudienceHelp,
+          FiftyFiftyHelp,
   },
   data() {
     return {
@@ -24,7 +26,6 @@ export default {
   },
   methods: {
     cutOptionsByHalf(value) {
-      console.log(value);
        // array of answers
       let options = ['a', 'b', 'c', 'd'];
       //takeout correct answer from options and get one wrong answer randomly
@@ -32,16 +33,14 @@ export default {
       options = options.filter(function(item) {
           return item !== correctAnswer
       });
-      //takout one random answer
+      //takout one wrong random answer
       const randomWrongAnswer = options[Math.floor(Math.random() * options.length)];
       options = options.filter(function(item) {
           return item !== randomWrongAnswer
       });
       this.twoIncorectAnswers = options;
       this.cutByHalfHelpUsed = true;
-      console.log(this.twoIncorectAnswers);
       return this.twoIncorectAnswers;
-
     }
   },
   computed: {
@@ -54,7 +53,7 @@ export default {
   <div class="flex flex-row">
     <div class="basis-3/4 md:basis-2/3 border rounded border-black outline outline-4 outline-blue-700 pl-10 pr-10 pb-20">
   
-      <Questions :twoIncorectAnswers="twoIncorectAnswers" />
+      <Questions :twoIncorectAnswers="twoIncorectAnswers" :cutByHalfHelpUsed="cutByHalfHelpUsed" />
 
     </div>
 
@@ -64,15 +63,12 @@ export default {
         <h3 class="text-white text-l text-bold pt-10 pb-5">
           Iskoristi pomoć:
         </h3>
-          <button
-              :value=this.correctAnswer
-              :disabled=this.cutByHalfHelpUsed
-              @click.prevent="cutOptionsByHalf($event.target.value)" 
-              :class="{ 'opacity-25 cursor-not-allowed': cutByHalfHelpUsed }"
-              class="bg-white hover:bg-blue-800 text-blue-900 font-semibold 
-              hover:text-white py-2 px-4 border border-blue-700 hover:border-transparent rounded mr-3">
-              50:50
-          </button>
+          <FiftyFiftyHelp
+            :correctAnswer = this.correctAnswer
+            :cutByHalfHelpUsed = this.cutByHalfHelpUsed
+            @cutOptionsByHalf="cutOptionsByHalf"
+            >
+          </FiftyFiftyHelp>
           <FriendsHelp/>
           <AudienceHelp/>
       </div>
