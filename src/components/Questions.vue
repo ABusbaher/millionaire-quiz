@@ -71,11 +71,15 @@ export default {
             selectedAnswer: "",
             currentQuestionObj: {},
             isAnswered: false,
+            isFiftyFiftyHelpUsed: false,
         }
     },
     components: {
         QuitQuiz,
         ConfirmAnswer,
+    },
+    props: {
+        twoIncorectAnswers: Array,
     },
     methods: {
         ...mapMutations(["nextScore", "setCurrentScore","previousScore", "setCorrenctAnswer"]),
@@ -91,6 +95,7 @@ export default {
                     this.get_random_question;
                     this.selectedAnswer = '';
                     this.isAnswered = false;
+                    this.isFiftyFiftyHelpUsed = true;
                 }, 500);
                 
             } else {
@@ -107,6 +112,9 @@ export default {
             }
             
         },
+        incorectAnswerDisable(value) {
+            return this.twoIncorectAnswers.includes(value)
+        }
     },
     computed: {
         get_random_question() {
@@ -140,9 +148,11 @@ export default {
         <div 
             :key="answer" v-for="(answer, key) in get_random_question.answers" 
             class="col-span-2 mr-3 mb-3"
-            
+            :class="[isFiftyFiftyHelpUsed == false && incorectAnswerDisable(key) ? 'invisible' : '']"
         >
-            <input class="sr-only peer" type="radio" :value="key" name="answer" v-model="selectedAnswer" :id="key">
+            <input class="sr-only peer" type="radio" :value="key" name="answer" 
+                v-model="selectedAnswer" :id="key" 
+            >
             <label 
                 class="flex p-5 bg-white border border-gray-300 rounded-lg 
                     cursor-pointer focus:outline-none  peer-checked:ring-blue-800
