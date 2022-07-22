@@ -2,72 +2,11 @@
 import { mapMutations, mapState } from "vuex";
 import QuitQuiz from "./buttons/QuitQuiz.vue";
 import ConfirmAnswer from "./buttons/ConfirmAnswer.vue";
+import QuestionJson from "@/Questions.json";
 
 export default {
     data() {
         return {
-            questions: [ {
-                questions_10000: [
-                {
-                    question: "Koje su boje strumfovi?",
-                    answers: { a: "Plave", b: "Žute", c: "Zelene", d: "Crvene" },
-                    correctAnswer: "a",
-                },
-                {
-                    question: "Kome se u laži nos povećava?",
-                    answers: { a: "Paji Patku", b: "Šilji", c: "Pinokiju", d: "Dambu" },
-                    correctAnswer: "c",
-                },
-                ],
-                questions_50000: [
-                {
-                    question: "Kada u trci prestignete trećeg učesnika na kom mestu ste vi?",
-                    answers: { a: "Drugom", b: "Trećem", c: "Prvom", d: "Četvrtom" },
-                    correctAnswer: "b",
-                },
-                {
-                    question: "Koji je glavni grad Švajcarske?",
-                    answers: { a: "Bern", b: "Cirih", c: "Ženeva", d: "Lucern" },
-                    correctAnswer: "a",
-                },
-                ],
-                questions_100000: [
-                {
-                    question: "Kako se zove grupa čiji su članovi Alan Ford, Jeremija, Bob Rok, Sir Oliver?",
-                    answers: { a: "Broj jedan", b: "TNT", c: "THC", d: "BS" },
-                    correctAnswer: "b",
-                },
-                {
-                    question: "Kako se zove je najveći okean?",
-                    answers: { a: "Pacifik (Tihi okean)", b: "Indijski", c: "Severni ledeni", d: "Atlantik" },
-                    correctAnswer: "a",
-                },
-                ],
-                questions_500000: [
-                {
-                    question: "Šta je u vizitkarti Al Caponea navedeno da je njegovo zanimanje?",
-                    answers: { a: "Stolar", b: "Zidar", c: "Prodavac nameštaja", d: "Prodavac osiguranja" },
-                    correctAnswer: "c",
-                },
-                {
-                    question: "Koje godine je Ana Ivanović osvija Roland garos?",
-                    answers: { a: "2007", b: "2009", c: "2010", d: "2008" },
-                    correctAnswer: "d",
-                },
-                ],
-                questions_1000000: [
-                {
-                    question: "Kako se zove ludi naučnik, najveći protivnik strip junaka Zagora?",
-                    answers: { a: "Helingen", b: "Okulus", c: "Ludi Tomi", d: "Profesor Balzak" },
-                    correctAnswer: "a",
-                },
-                {
-                    question: "Koliko ljudi u jednoj ekipi počinju vaterpolo utakmicu?",
-                    answers: { a: "5", b: "7", c: "8", d: "6" },
-                    correctAnswer: "b",
-                },
-                ],
-            }],
             selectedAnswer: "",
             currentQuestionObj: {},
             isAnswered: false,
@@ -158,7 +97,7 @@ export default {
                 return this.$router.push('/score');
             };
             const getQuestion = 'questions_' + this.currentScore;
-            const questionsObj = this.questions[0][getQuestion];
+            const questionsObj = QuestionJson.questions[0][getQuestion];
             this.currentQuestionObj =  questionsObj[Math.floor(Math.random()* questionsObj.length)];
             this.setCorrenctAnswer(this.currentQuestionObj.correctAnswer);
             return this.currentQuestionObj;
