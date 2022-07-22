@@ -11,9 +11,19 @@ export default {
     name: "CloseApp",
     methods: {
         closeApp() {
-            if (confirm("Da li ste sigurni da želite da napustite aplikaciju?")) {
-                window.open('','_self').close();
-            }
+             this.$swal.fire({
+                title: 'Da li ste sigurni da želite da napustite aplikaciju?',
+                text: "Prozor će se automatski zatvoriti posle potvrde",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'red',
+                confirmButtonText: 'Želim napustititi',
+                cancelButtonText: 'Predomislio sam se',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    window.open('','_self').close();
+                }
+            })
         }
     }
 }

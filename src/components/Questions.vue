@@ -86,10 +86,22 @@ export default {
         ...mapMutations(["nextScore", "setCurrentScore","previousScore", "setCorrenctAnswer"]),
         answered(value) {
            if (value == "") {
-                return alert("Niste izabrali odgovor");
+                return this.$swal.fire({ 
+                    icon: 'error', 
+                    title: 'Greška!', 
+                    text: 'Niste izabrali odgovor!',
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "red",
+                });
             };
             if (value == this.currentQuestionObj.correctAnswer) {
-                alert("Odgovor je tačan");
+                this.$swal.fire({
+                    icon: 'success',
+                    title: 'Čestitamo',
+                    text: 'Odgovor je tačan!',
+                    confirmButtonText: "Nastavi",
+                    confirmButtonColor: "blue",
+                });
                 this.isAnswered = true;
                 setTimeout(() => {
                     this.nextScore();
@@ -97,10 +109,16 @@ export default {
                     this.selectedAnswer = '';
                     this.isAnswered = false;
                     this.cutByHalfHelpUsed == true ? this.isFiftyFiftyHelpUsed = true : this.isFiftyFiftyHelpUsed = false;
-                }, 500);
+                }, 1000);
                 
             } else {
-                alert("Odgovor nije tačan");
+                this.$swal.fire({ 
+                    icon: 'error', 
+                    title: 'Greška!', 
+                    text: 'Odgovor nije tačan!',
+                    confirmButtonText: "Završi kviz",
+                    confirmButtonColor: "red",
+                });
                 this.isAnswered = true;
                 setTimeout(() => {
                     this.$router.push('/score');
@@ -109,7 +127,7 @@ export default {
                     } else {
                         this.setCurrentScore(0);
                 }
-                }, 1500);
+                }, 2000);
             }
             
         },
@@ -121,7 +139,19 @@ export default {
         get_random_question() {
             if (this.currentScore > 1000000) {
                 this.previousScore();
-                alert("Čestitamo postali ste milioner");
+                this.$swal.fire({
+                    title: 'Čestitamo postali ste milioner!!!',
+                    width: 600,
+                    padding: '3em',
+                    color: 'blue',
+                    background: '#fff',
+                    imageUrl: "src/assets/images/firework2.gif",
+                    imageWidth: 550,
+                    imageHeight: 225,
+                    imageAlt: "Fireworks",
+                    confirmButtonText: "Završi kviz",
+                    confirmButtonColor: "blue",
+                    })
                 return this.$router.push('/score');
             };
             if (this.currentScore < 10000) {

@@ -10,6 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { createStore } from 'vuex';
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css'
+
 
 /* add icons to the library */
 library.add(fas);
@@ -44,7 +47,8 @@ const store = createStore({
 
 const app = createApp(App);
 
-app.use(store)
+app.use(store);
 app.use(router);
 app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(VueSweetalert2);
 app.mount("#app");
