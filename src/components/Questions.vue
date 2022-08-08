@@ -1,6 +1,7 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 import QuitQuiz from "./buttons/QuitQuiz.vue";
+import ConfirmAnswer from "./buttons/ConfirmAnswer.vue";
 
 export default {
     data() {
@@ -68,22 +69,21 @@ export default {
                 ],
             }],
             selectedAnswer: "",
-            correctAnswer: "",
             currentQuestionObj: {},
             isAnswered: false,
         }
     },
     components: {
         QuitQuiz,
+        ConfirmAnswer,
     },
     methods: {
         ...mapMutations(["nextScore", "setCurrentScore","previousScore"]),
-        answered(event) {
-            event.preventDefault();
-            if (this.selectedAnswer == "") {
+        answered(value) {
+           if (value == "") {
                 return alert("Niste izabrali odgovor");
             };
-            if (event.target.value == this.currentQuestionObj.correctAnswer) {
+            if (value == this.currentQuestionObj.correctAnswer) {
                 alert("Odgovor je tačan");
                 this.isAnswered = true;
                 setTimeout(() => {
@@ -156,13 +156,10 @@ export default {
 
     <div class="flex justify-between">
         <QuitQuiz/>
-        <button
+        <ConfirmAnswer
             :value=this.selectedAnswer
-            @click="answered($event)"
-            class="bg-white hover:bg-blue-800 text-blue-900 font-semibold 
-            hover:text-white py-2 px-4 border border-blue-700 hover:border-transparent rounded mr-3">
-            Potvrdi
-        </button>
+            @onClick="answered"
+        />
     </div>
 
 </template>
