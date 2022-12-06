@@ -10,6 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { createStore } from 'vuex';
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css'
+
 
 /* add icons to the library */
 library.add(fas);
@@ -19,6 +22,7 @@ const store = createStore({
       return {
         currentScore: 10000,
         scores: [0, 10000,50000,100000,500000,1000000,2000000],
+        correctAnswer: '',
       }
     },
     mutations: {
@@ -34,13 +38,17 @@ const store = createStore({
         },
         setCurrentScore (state, payload) {
             state.currentScore = payload;
+        },
+        setCorrenctAnswer (state, payload) {
+          state.correctAnswer = payload;
         }
     }
   });
 
 const app = createApp(App);
 
-app.use(store)
+app.use(store);
 app.use(router);
 app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(VueSweetalert2);
 app.mount("#app");

@@ -6,10 +6,20 @@ export default {
     methods: {
         ...mapMutations(["previousScore"]),
         leaveQuiz() {
-            if (confirm("Da li ste sigurni da želite da odustanete?")) {
-                this.previousScore();
-                this.$router.push('/score');
-            }
+            this.$swal.fire({
+                title: 'Da li ste sigurni da želite da odustanete?',
+                text: "Sačuvaćete sumu iz prethodnog pitanja",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'red',
+                confirmButtonText: 'Želim odustatati',
+                cancelButtonText: 'Predomislio sam se',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    this.previousScore();
+                    this.$router.push('/score');
+                }
+            })
         }
     }
 }
